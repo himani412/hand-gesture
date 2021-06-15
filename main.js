@@ -19,3 +19,39 @@ pngquality:90,
  function modelLoaded(){
      console.log('ModelLoaded!');
  }
+ function speak(){
+    var synth=window.speechSynthesis;
+    speakdata="The hand gesture prediction is "+prediction;
+var utterThis=new SpeechSynthesisUtterance(speakdata);
+synth.speak(utterThis);  
+}
+function check(){
+    img=document.getElementById('captureimage');
+    classifier.classify(img, gotresult);
+}
+function gotresult(error,results){
+    if(error){
+        console.error(error);
+    }
+    else{
+        console.log(results);
+        document.getElementById("resultgesturename").innerHTML=results[0].label;
+        prediction=results[0].label;
+        speak();
+       if(results[0].label=="amazing"){
+           document.getElementById("updategesture").innerHTML="&#128076;";
+       }
+       if(results[0].label=="thumbs up"){
+           document.getElementById("updategesture").innerHTML="&#128077;";
+       }
+       if(results[0].label=="victory"){
+           document.getElementById("updategesture").innerHTML="&#9996;";
+       }
+       if(results[0].label=="right"){
+        document.getElementById("updategesture").innerHTML="&#128073;";
+    }
+    if(results[0].label=="clap"){
+        document.getElementById("updategesture").innerHTML="&#128079;;";
+    }
+    }
+}
